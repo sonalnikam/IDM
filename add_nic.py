@@ -58,8 +58,8 @@ def update_virtual_nic_state(si, vm_obj, nic_number, new_nic_state):
         if isinstance(dev, vim.vm.device.VirtualEthernetCard) \
                 and dev.deviceInfo.label == nic_label:
             virtual_nic_device = dev
-        if not virtual_nic_device:
-           raise RuntimeError('Virtual {} could not be found.'.format(nic_label))
+    if not virtual_nic_device:
+        raise RuntimeError('Virtual {} could not be found.'.format(nic_label))
 
     virtual_nic_spec = vim.vm.device.VirtualDeviceSpec()
     virtual_nic_spec.operation = \
@@ -89,6 +89,7 @@ def update_virtual_nic_state(si, vm_obj, nic_number, new_nic_state):
     task = vm_obj.ReconfigVM_Task(spec=spec)
     tasks.wait_for_tasks(si, [task])
     return True
+
 def get_args():
     argument_spec = vmware_argument_spec()
     argument_spec.update(dict(hostname=dict(type='str', required=True),
@@ -139,7 +140,7 @@ def main():
         args.exit_json(msg=msg ,changed=False)
     else:
         msg = ("VM not found")
-         args.fail_json(msg=msg)
+        args.fail_json(msg=msg)
 # start
 if __name__ == "__main__":
     main()
