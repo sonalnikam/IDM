@@ -1,0 +1,31 @@
+---
+- name: VSPHERE_GUEST | connect vNICs to correct network
+  connection: local
+  vsphere_guest:
+    vcenter_hostname: "{{hostname }}"
+    username:  "{{username }}"
+    password: "{{password }}"
+    validate_certs: False
+    guest: "{{name }}"
+    state: reconfigured
+    esxi:
+        datacenter: Arlington
+      #  hostname: "{{ esxi_hostname }}"
+    vm_nic:
+        nic1:
+            type: vmxnet3
+            network: 011_Infr_mgmt
+            network_type: dvs
+            state: connected
+        nic2:
+            type: vmxnet3
+            network: 014_bur
+            network_type: dvs
+            ip_address: 10.10.10.10
+            state: connected
+        nic3:
+            type: vmxnet3
+            network: 014_bur
+            network_type: dvs
+            ip_address: 10.10.10.10
+            state: connected
