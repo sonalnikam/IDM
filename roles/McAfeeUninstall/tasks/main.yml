@@ -1,0 +1,28 @@
+---
+- name: uninstalling McAfee
+  win_package: 
+     path: "{{path}}"
+     state: absent
+  
+- name: removing McAfee Sevice
+  win_service:
+     name: McAfeeFramework
+     state: absent
+- name: McShield service remove
+  win_service:
+     name: McShield
+     state: absent
+- name:  McAfee task Manager
+  win_service:
+     name: McTaskManager
+     state: absent
+- name: mfevtp
+  win_service:
+     name: mfevtp
+     state: absent    
+- name: uninstalling agent
+  win_package:
+     product_id: '{76473CBB-FE8D-4E3A-9591-CD6EFB621063}'
+     state: absent
+#- name: reboot the instance
+#  win_reboot:

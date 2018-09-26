@@ -1,0 +1,23 @@
+---
+# tasks file for wmi_port_evanios
+- name: enabling WMI port to 24158 for Evanios
+  action: win_firewall_rule
+  args:
+    name: wmiApSrv
+    enable: yes
+    state: present
+    local_port: 24158
+    action: allow
+    direction: out
+    protocol: TCP
+- name: command
+  win_shell: winmgmt -standalonehost
+- name: stop
+  win_shell: net stop "winmgmt" | "y"
+- name: start
+  win_shell: net start "winmgmt" | "y"
+- name: powershell
+  win_shell: netsh firewall add portopening TCP 24158 WMIFixedPort
+
+
+    

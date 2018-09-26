@@ -1,0 +1,10 @@
+---
+# vars file for ec2_rename
+aws_access_key: 
+aws_secret_key:
+group_id: sg-0ca88479b5feea2f9
+vpc_subnet_id: subnet-036c5eeed51ffdcd2
+with_list:
+  - EC2EUW1ANSTL00
+  - sonal
+

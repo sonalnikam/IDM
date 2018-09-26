@@ -1,0 +1,10 @@
+---
+
+
+
+- name: stride
+  command: touch {{name}}.txt
+#  with_items:
+#    - sonal
+#"{{item.value.name}}{{item.value.a}}"
+#  with_sequence: start=1 end=2 stride=1

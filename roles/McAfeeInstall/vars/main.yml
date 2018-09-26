@@ -1,0 +1,6 @@
+---
+# vars file for McAfeeInstall
+path: C:\tempsetup
+src_path: /home/ec2-user/VSE880EMLRP7
+dest_path: C:\tempsetup\
+setup_file_path: C:\tempsetup\VSE880EMLRP7\SetupVSE.exe ADDLOCAL=ALL REBOOT=A /q

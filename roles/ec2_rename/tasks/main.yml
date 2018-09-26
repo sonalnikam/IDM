@@ -1,0 +1,22 @@
+---
+#  - name: including var file
+#  include_vars: /home/ec2-user/sonal/name.yml
+
+- name: create ec2 instance
+  ec2:
+    key_name: devkeypair
+#  aws_access_key:{{aws_access_key}}
+#  aws_secret_key:{{aws_secret_key}}
+    region: eu-west-1
+    image: ami-7c491f05
+    instance_type: "{{it}}"
+    group_id: "{{group_id}}"
+    wait: true
+    count: 1
+    count_tag:
+         Name: "{{name}}"
+    instance_tags:
+         Name: "{{name}}"
+#    name: linux
+    vpc_subnet_id: "{{vpc_subnet_id}}"
+  

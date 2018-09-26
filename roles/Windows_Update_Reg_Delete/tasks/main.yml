@@ -1,0 +1,7 @@
+---
+- name: Delete  windows Update Registry Key From Regedit
+  win_regedit:
+      path: "{{path}}"
+      state: absent
+  register: current_result
+- debug: msg="{{current_result}}"

@@ -1,0 +1,7 @@
+---
+# tasks file for test
+- name: test
+  template: 
+    src: /home/ec2-user/roles/test/template/lp.j2
+ #int num: 1
+ #command: touch 'onal'+num.txt
