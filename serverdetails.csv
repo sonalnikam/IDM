@@ -1,0 +1,3 @@
+appname,os,ec2name,amiid,instype,storage1,storage2,vpc,subnet,secgroup1,secgroup2,secgroup3,usertodel1,usertodel2,usertodel3,usertodel4,usertoadd1,usertoadd2,packtoremove1,packtoremove2,packtoremove3,packtoremove4
+,,demo1,,t2.micro,,,vpc-fb13809c,subnet-368c1e7f,sg-0ff0ccfd93581a6d2,,,,,,,,,,,,
+,,demo2,,t2.micro,,,vpc-fb13809c,subnet-368c1e7f,sg-0ff0ccfd93581a6d2,,,,,,,,,,,,
