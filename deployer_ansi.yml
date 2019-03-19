@@ -1,0 +1,431 @@
+---
+
+- name: file creation
+  file:
+     path: /home/admin/{{ item.file_name }}.ansi
+     state: touch 
+  with_items: 
+  - "{{ variables }}"
+  when: '"{{ item.file_name }}" != ""'
+  register: output
+
+
+- name: print out output
+  debug:
+    var: output.results[0].item.file_name
+  
+- name: Adding the new configurations
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: "[pages]"
+  with_items: 
+    - "{{ variables }}"
+
+
+- name: Adding the new configurations
+  lineinfile:
+     path: /home/admin/{{ output.results[0].item.file_name }}.ansi
+     line: "{{ item.ip }}.{{ item.hostname }}"
+  with_items: 
+    - "{{ variables }}"
+ # when: '"{{ item.file_name }}" == ""'
+
+
+- name: Adding the new configurations
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: "[hblock]"
+  with_items: 
+    - "{{ variables }}"
+
+
+- name: adding hblock
+  blockinfile:
+    path: /home/admin/{{ output.results[0].item.file_name }}.ansi
+    block: |
+      {{ item.ip }}.{{ item.hostname }}
+    marker: ""
+  with_items:
+    - "{{ variables }}"
+
+- name: Remove blank lines blockinfile put in
+  lineinfile :
+    path: /home/admin/{{ item.file_name }}.ansi
+    state: absent
+    regexp: '^$'
+  with_items: "{{ variables }}"
+  
+
+- name: Adding the new configurations
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: "[hpod1]"
+  with_items:
+    - "{{ variables }}"
+
+- name: adding hpod1
+  blockinfile:
+    path: /home/admin/{{ output.results[0].item.file_name }}.ansi
+    block: |
+      {{ item.hpod1 }}.{{ item.hostname }}
+    marker: ""
+  with_items:
+    - "{{ variables }}"
+  when: '"{{ item.hpod1 }}" != ""'
+ 
+- name: Remove blank lines blockinfile put in
+  lineinfile :
+    path: /home/admin/{{ item.file_name }}.ansi
+    state: absent
+    regexp: '^$'
+  with_items:
+    - "{{ variables }}"
+
+
+- name: Adding the new configurations
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: "[hpod2]"
+  with_items: 
+    - "{{ variables }}"
+  
+
+
+- name: adding hpod2
+  blockinfile:
+    path: /home/admin/{{ output.results[0].item.file_name }}.ansi
+    block: |
+      {{ item.hpod2 }}.{{ item.hostname }}
+    marker: ""
+  with_items:
+    - "{{ variables }}"
+  when: '"{{ item.hpod2 }}" != ""'
+
+- name: Remove blank lines blockinfile put in
+  lineinfile :
+    path: /home/admin/{{ item.file_name }}.ansi
+    state: absent
+    regexp: '^$'
+  with_items: "{{ variables }}"
+
+
+
+- name: Adding the new configurations
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: "[hpod:children]"
+  with_items:
+    - "{{ variables }}"
+
+
+- name: Adding the new configurations
+  lineinfile:
+     path: /home/admin/{{ output.results[0].item.file_name }}.ansi
+     line: "{{ item.hpod_children }}"
+  with_items:
+    - "{{ variables }}"
+
+- name: Remove blank lines blockinfile put in
+  lineinfile :
+    path: /home/admin/{{item.file_name }}.ansi
+    state: absent
+    regexp: '^$'
+  with_items: 
+    - "{{ variables }}"
+
+
+- name: Adding the new configurations
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: "[cluster:children]"
+  with_items: 
+    - "{{ variables }}"
+
+
+- name: Adding the new configurations
+  lineinfile:
+     path: /home/admin/{{ output.results[0].item.file_name }}.ansi
+     line: "{{ item.cluster_children }}"
+  with_items:
+    - "{{ variables }}"
+
+- name: Adding the new configurations
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: "[cvms:children]"
+  with_items: 
+    - "{{ variables }}"
+
+
+- name: Remove blank lines blockinfile put in
+  lineinfile :
+    path: /home/admin/{{ output.results[0].item.file_name }}.ansi
+    state: absent
+    regexp: '^$'
+  with_items: 
+    - "{{ variables }}"
+
+- name: Adding the new configurations
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: "[all:children]"
+  with_items: 
+    - "{{ variables }}"
+
+
+- name: adding all:children
+  blockinfile:
+    path: /home/admin/{{ output.results[0].item.file_name }}.ansi
+    block: |
+      cluster
+      cvms
+    marker: ""
+#  with_items: 
+#    - "{{ variables }}"
+
+- name: Remove blank lines blockinfile put in
+  lineinfile :
+    path: /home/admin/{{ item.file_name }}.ansi
+    state: absent
+    regexp: '^$'
+  with_items: 
+    - "{{ variables }}"
+
+
+- name: Adding the new configurations
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: "[all]"
+  with_items: 
+    - "{{ variables }}"
+
+
+- name: Adding the new configurations
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: "localhost ansible_connection=local"
+  with_items: 
+    - "{{ variables }}"
+    
+
+- name: Remove blank lines blockinfile put in
+  lineinfile :
+    path: /home/admin/{{ item.file_name }}.ansi
+    state: absent
+    regexp: '^$'
+  with_items: 
+    - "{{ variables }}"
+
+
+- name: Adding the new configurations
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: "[all:vars]"
+  with_items: 
+    - "{{ variables }}"
+
+- name: Adding the new configurations
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: 'cluster_name={{ item.cluster_name }}'
+  with_items:
+    - "{{ variables }}"
+  when: '"{{ item.cluster_name }}" != ""'
+- name: a
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: 'replication_policy={{ item.replication_policy }}'
+  with_items: 
+    - "{{ variables }}"  
+  when: '"{{ item.replication_policy }}" != ""'
+
+- name: a
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: 'rack_field={{ item.rack_field }}'
+  with_items:
+    - "{{ variables }}"
+  when: '"{{ item.rack_field }}" != ""'
+
+- name: a
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: 'datacenter_field={{ item.datacenter_field }}'
+  with_items:
+    - "{{ variables }}"
+  when: '"{{ item.datacenter_field }}" != ""'
+
+- name: a
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: 'replication_factor={{ item.replication_factor }}'
+  with_items:
+    - "{{ variables }}"
+  when: '"{{ item.replication_factor }}" != ""'
+
+
+- name: a
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: 'admin_addr={{ item.admin_addr }}'
+  with_items:
+    - "{{ variables }}"
+  when: '"{{ item.admin_addr }}" != ""'
+
+- name: a
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: 'admin_username={{ item.admin_username }}'
+  with_items:
+    - "{{ variables }}"
+  when: '"{{ item.admin_username }}" != ""'
+
+- name: a
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: 'from_addr={{ item.from_addr }}'
+  with_items:
+    - "{{ variables }}"
+  when: '"{{ item.from_addr }}" != ""'
+
+- name: a
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: 'mail_addr={{ item.mail_addr }}'
+  with_items:
+    - "{{ variables }}"
+  when: '"{{ item.mail_addr }}" != ""'
+
+- name: a
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: 'smtp_host={{ item.smtp_host }}'
+  with_items:
+    - "{{ variables }}"
+  when: '"{{ item.smtp_host }}" != ""'
+
+- name: a
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: 'ntp_server={{ item.ntp_server }}'
+  with_items:
+    - "{{ variables }}"
+  when: '"{{ item.ntp_server }}" != ""'
+
+- name: a
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: 'email_interval={{ item.email_interval }}'
+  with_items:
+    - "{{ variables }}"
+  when: '"{{ item.email_interval }}" != ""'
+
+- name: a
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: 'use_ntp={{ item.use_ntp }}'
+  with_items:
+    - "{{ variables }}"
+  when: '"{{ item.use_ntp }}" != ""'
+
+- name: a
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: 'timezone={{ item.timezone }}'
+  with_items:
+    - "{{ variables }}"
+  when: '"{{ item.timezone }}" != ""'
+- name: a
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: 'dns_available={{ item.dns_available }}'
+  with_items:
+    - "{{ variables }}"
+  when: '"{{ item.dns_available }}" != ""'
+
+- name: a
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: 'initial_install={{ item.initial_install }}'
+  with_items:
+    - "{{ variables }}"
+  when: '"{{ item.initial_install }}" != ""'
+
+- name: a
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: 'transfer_hosts={{ item.transfer_hosts }}'
+  with_items:
+    - "{{ variables }}"
+  when: '"{{ item.transfer_hosts }}" != ""'
+
+- name: a
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: 'lsitype={{ item.lsitype }}'
+  with_items:
+    - "{{ variables }}"
+  when: '"{{ item.lsitype }}" != ""'
+
+
+- name: a
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: '# storage interface refers to the ethernet interface of the '
+  with_items:
+    - "{{ variables }}"
+
+#- name: a
+#  lineinfile:
+#     path: /opt/svc-ansible/hedvig/test.txt
+#     line: 'storage network.'
+
+- name: a
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: "storage_interface=''"
+  with_items:
+    - "{{ variables }}"
+
+
+- name: a
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: 'ssh_password={{ item.ssh_password }}'
+  with_items:
+    - "{{ variables }}"
+  when: '"{{ item.ssh_password }}" != ""'
+
+- name: a
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: '# If custom drive map is needed, put the location of the drive '
+  with_items:
+    - "{{ variables }}"
+
+#- name: a
+#  lineinfile:
+#     path: /opt/svc-ansible/hedvig/test.txt
+#     line: 'map file.'
+
+
+- name: a
+  lineinfile:
+     path: /home/admin/{{ item.file_name }}.ansi
+     line: 'custom_drive_map={{ item.custom_drive_map }}'
+  with_items:
+    - "{{ variables }}"
+  when: '"{{ item.custom_drive_map }}" != ""'
+
+
+
+
+- name: Remove blank lines blockinfile put in
+  lineinfile :
+    path: /home/admin/{{ item.file_name }}.ansi
+    state: absent
+    regexp: '^$'
+  with_items: 
+    - "{{ variables }}"
+  
+
