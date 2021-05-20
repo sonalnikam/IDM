@@ -19,3 +19,15 @@ vars:
       loop: "{{file_status.results}}"
       when: item.stat.exists == True
   when: vmware_selinux_settings is defined
+
+
+
+    # - name: creating data for the files that exist 
+    #   set_fact:
+    #     vmware_selinux_settings: "{{vmware_selinux_settings+[item[0].item|default([])|combine(item[1])]}}"
+    #   vars:
+    #      exist: ['exists': 'true']
+    #   with_nested:
+    #   - "{{file_status.results|list}}"
+    #   - "{{exist}}"
+    #   when: item[0].stat.exists == True
