@@ -1,0 +1,14 @@
+- name: To check whether vmware file exist or not
+  block:
+    - name: Checking existing file name
+      stat:
+        path: "{{ item.path }}"
+      loop: "{{ vmware_selinux_settings }}"
+      register: file_status
+
+    - name: creating data for the files that exist 
+      set_fact:
+        vmware_selinux_settings: "{{vmware_selinux_settings+[item.item|default([])|combine({'exists': 'true'})]}}"
+      loop: "{{file_status.results}}"
+      when: item.stat.exists == True
+  when: vmware_selinux_settings is defined
