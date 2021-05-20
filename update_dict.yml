@@ -1,3 +1,10 @@
+vars:
+  vmware_selinux_settings:
+    - { path: '/home/snikam/hello1', state: file, setype: 'rhnsd_initrc_exec_t', exists: 'false' }
+    - { path: '/home/snikam/hello2', state: file, setype: 'rhnsd_exec_t', exists: 'false' }
+    - { path: '/home/snikam/hello3', state: file, setype: 'vmtools_exec_t', exists: 'false' }
+
+
 - name: To check whether vmware file exist or not
   block:
     - name: Checking existing file name
